@@ -1,0 +1,4 @@
+ai4water<=1.05
+lightgbm
+xgboost
+catboost

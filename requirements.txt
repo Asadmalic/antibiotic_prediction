@@ -1,4 +1,6 @@
-ai4water<=1.05
+ai4water>=1.05
 lightgbm
 xgboost
 catboost
+scikit-optimize
+optuna

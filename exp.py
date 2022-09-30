@@ -24,11 +24,6 @@ def recall(t,p)->float:
 def specificity(t,p)->float:
     return ClassificationMetrics(t, p).specificity(average="macro")
 
-
-def sensitivity(t,p)->float:
-    return ClassificationMetrics(t, p).sensitivity(average="macro")
-
-
 comparisons = MLClassificationExperiments(
     input_features=data.columns.tolist()[0:-1],
     output_features=data.columns.tolist()[-1:],
@@ -37,7 +32,7 @@ comparisons = MLClassificationExperiments(
     verbosity=0,
     train_fraction=0.75,
     val_fraction=0.3,
-    monitor=[f1_score, "accuracy", precision, recall, "balanced_accuracy", sensitivity, specificity],
+    monitor=[f1_score, "accuracy", precision, recall, "balanced_accuracy", specificity],
     exp_name = f"MLClassificationExperiments_{dateandtime_now()}_{target}_{run_type}"
 )
 
@@ -71,10 +66,11 @@ for metric in [
     "f1_score",
     "accuracy", "precision",
                "recall",
-               "balanced_accuracy", #"sensitivity",
+               "balanced_accuracy",
                "specificity"
                ]:
     print(metric)
-    comparisons.compare_errors(metric)
+    comparisons.compare_errors(metric, data=data)
 
-# optimize hyperparameters for best model
+test_x, test_y = comparisons.model_.test_data(data=data)
+comparisons.compare_roc_curves(test_x, test_y)

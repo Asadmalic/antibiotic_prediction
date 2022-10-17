@@ -32,6 +32,7 @@ comparisons = MLClassificationExperiments(
     verbosity=0,
     train_fraction=0.75,
     val_fraction=0.3,
+    x_transformation="zscore",
     monitor=[f1_score, "accuracy", precision, recall, "balanced_accuracy", specificity],
     exp_name = f"MLClassificationExperiments_{dateandtime_now()}_{target}_{run_type}"
 )
